@@ -27,14 +27,14 @@ namespace GameServer
             DBService.Instance.Init();
             UserService.Instance.Init();
             thread = new Thread(new ThreadStart(this.Update));
-            HelloWorldServices.Instance.Init();
+            
             return true;
         }
 
         public void Start()
         {
             network.Start();
-            HelloWorldServices.Instance.Start();
+            
             running = true;
             thread.Start();
         }

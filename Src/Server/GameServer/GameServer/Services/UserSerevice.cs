@@ -51,21 +51,21 @@ namespace GameServer.Services
             else
             {
                 sender.Session.User = user;
-
                 message.Response.userLogin.Result = Result.Success;
                 message.Response.userLogin.Errormsg = "None";
+
                 message.Response.userLogin.Userinfo = new NUserInfo();
-                message.Response.userLogin.Userinfo.Id = 1;
+                message.Response.userLogin.Userinfo.Id = (int)user.ID;  // 默认硬编码为1方便测试,更改为动态用户编码
                 message.Response.userLogin.Userinfo.Player = new NPlayerInfo();
                 message.Response.userLogin.Userinfo.Player.Id = user.Player.ID;
-                foreach (var c in user.Player.Characters)
-                {
-                    NCharacterInfo info = new NCharacterInfo();
-                    info.Id = c.ID;
-                    info.Name = c.Name;
-                    info.Class = (CharacterClass)c.Class;
-                    message.Response.userLogin.Userinfo.Player.Characters.Add(info);
-                }
+                //foreach (var c in user.Player.Characters)
+                //{
+                //    NCharacterInfo info = new NCharacterInfo();
+                //    info.Id = c.ID;
+                //    info.Name = c.Name;
+                //    info.Class = (CharacterClass)c.Class;
+                //    message.Response.userLogin.Userinfo.Player.Characters.Add(info);
+                //}
 
             }
             byte[] data = PackageHandler.PackMessage(message);

@@ -13,6 +13,7 @@ namespace Services
     class UserService : Singleton<UserService>, IDisposable
     {
         public UnityEngine.Events.UnityAction<Result, string> OnRegister;
+        public UnityEngine.Events.UnityAction<Result, string> OnLogin;
         NetMessage pendingMessage = null;
         bool connected = false;
 
@@ -21,12 +22,13 @@ namespace Services
             NetClient.Instance.OnConnect += OnGameServerConnect;
             NetClient.Instance.OnDisconnect += OnGameServerDisconnect;
             MessageDistributer.Instance.Subscribe<UserRegisterResponse>(this.OnUserRegister);
-            
+            MessageDistributer.Instance.Subscribe<UserLoginResponse>(this.OnUserLogin);
         }
 
         public void Dispose()
         {
             MessageDistributer.Instance.Unsubscribe<UserRegisterResponse>(this.OnUserRegister);
+            MessageDistributer.Instance.Unsubscribe<UserLoginResponse>(this.OnUserLogin);
             NetClient.Instance.OnConnect -= OnGameServerConnect;
             NetClient.Instance.OnDisconnect -= OnGameServerDisconnect;
         }
@@ -118,5 +120,50 @@ namespace Services
                 this.OnRegister(response.Result, response.Errormsg);
             }
         }
+
+
+        public void SendLogin(string user, string psw) 
+        {
+            Debug.LogFormat("UserRegisterRequest::user :{0} psw:{1}", user, psw);
+            NetMessage message = new NetMessage();
+            message.Request = new NetMessageRequest();
+            message.Request.userLogin = new UserLoginRequest();
+            message.Request.userLogin.User = user;
+            message.Request.userLogin.Passward = psw;
+
+            if(this.connected && NetClient.Instance.Connected)
+            {
+                this.pendingMessage = null;
+                NetClient.Instance.SendMessage(message);
+            }
+            else
+            {
+                this.pendingMessage = message;
+                this.ConnectToServer();
+            }
+        }
+
+        void OnUserLogin(object sender, UserLoginResponse response)
+        {
+            Debug.LogFormat("OnLogin:{0} [{1}]", response.Result, response.Errormsg);
+
+            if(response.Result == Result.Success)
+            {
+                //登录成功逻辑
+                Models.User.Instance.SetupUserInfo(response.Userinfo);
+            }
+
+            if (this.OnLogin != null)
+            {
+                this.OnLogin(response.Result, response.Errormsg);
+            }
+
+
+        }
+
+
+
+
+
     }
 }
