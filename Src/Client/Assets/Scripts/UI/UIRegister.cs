@@ -20,7 +20,14 @@ public class UIRegister : MonoBehaviour {
 	
     void OnRegister(SkillBridge.Message.Result result, string msg)
     {
-        MessageBox.Show(string.Format("结果：{0} msg:{1}",result,msg));
+        if (result == SkillBridge.Message.Result.Success) 
+        {
+            MessageBox.Show(string.Format("注册成功{0}, {1}", result, msg));
+        }
+        else
+        {
+            MessageBox.Show(string.Format("发生错误{0}, {1}", msg, MessageBoxType.Error));
+        }
     }
 	// Update is called once per frame
 	void Update () {
