@@ -28,6 +28,7 @@ public class UILogin : MonoBehaviour
         if (result == SkillBridge.Message.Result.Success)
         {
             MessageBox.Show(string.Format("µÇÂ¼³É¹¦£º{0} msg:{1}", result, msg));
+            SceneManager.Instance.LoadScene("CharSelect");
         }
         else
         {
