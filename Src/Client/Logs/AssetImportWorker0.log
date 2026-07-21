@@ -145,7 +145,7 @@ Mono: successfully reloaded assembly
 Domain Reload Profiling: 6187ms
 	BeginReloadAssembly (2312ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (9ms)
+		DisableScriptedObjects (15ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (43ms)
@@ -267,7 +267,7 @@ Mono: successfully reloaded assembly
 Domain Reload Profiling: 3084ms
 	BeginReloadAssembly (252ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (8ms)
+		DisableScriptedObjects (9ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (57ms)

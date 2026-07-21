@@ -145,7 +145,7 @@ Mono: successfully reloaded assembly
 Domain Reload Profiling: 6203ms
 	BeginReloadAssembly (2321ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (8ms)
+		DisableScriptedObjects (12ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (44ms)
@@ -226,7 +226,7 @@ Domain Reload Profiling: 2592ms
 		RebuildScriptCaches (0ms)
 		SetupLoadedEditorAssemblies (1340ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (35ms)
+			InitializePlatformSupportModulesInManaged (39ms)
 			SetLoadedEditorAssemblies (5ms)
 			BeforeProcessingInitializeOnLoad (87ms)
 			ProcessInitializeOnLoadAttributes (775ms)

@@ -24,7 +24,7 @@ public class UIcharacterSelect : MonoBehaviour
 
 
 
-  
+
 
     void Start()
     {
@@ -41,8 +41,8 @@ public class UIcharacterSelect : MonoBehaviour
 
         if(init)
         {
-
-        }
+        
+    }
 
 
     }
@@ -62,14 +62,18 @@ public class UIcharacterSelect : MonoBehaviour
     {
         this.charClass = (CharacterClass)charClass;
         characterView3D.CurrentCharacter = charClass - 1;
-        
+        this.Onclectedimage = charClass - 1;
+    }
+
+    void UpdateClectedimage()
+    {
         for (int i = 0; i < onclectedimages.Length; i++)
         {
             onclectedimages[i].SetActive(i == charClass - 1);
             describe[i].text = DataManager.Instance.Characters[i + 1].Description;
         }
         
-    }
+        }
 
 
 
