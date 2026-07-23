@@ -14,7 +14,7 @@ namespace Services
     {
         public UnityEngine.Events.UnityAction<Result, string> OnRegister;
         public UnityEngine.Events.UnityAction<Result, string> OnLogin;
-        public UnityEngine.Events.UnityAction<Result, string> OnCharacterCreate;
+        public UnityEngine.Events.UnityAction<Result, string> OnCharacterCreate; 
 
         NetMessage pendingMessage = null;
         bool connected = false;
@@ -170,8 +170,51 @@ namespace Services
 
         void OnUserCreateCharacter(object sender, UserCreateCharacterResponse response)
         {
+            Debug.LogFormat("UserCreateCharacter:{0} ,{1}", response.Result, response.Errormsg);
+
+            if(response.Result == Result.Success )
+            {
+                Models.User.Instance.Info.Player.Characters.Clear();
+                Models.User.Instance.Info.Player.Characters.AddRange(response.Characters);
+               
+            }
+
+            if(this.OnCharacterCreate != null)
+            {
+                this.OnCharacterCreate(response.Result, response.Errormsg);
+            }
+        }
+
+        public void SendCharacterCreate(string username, CharacterClass charClass)
+        {
+            Debug.LogFormat("UserCreateCharacterRequest::user :{0} class:{1}", username, charClass);
+            NetMessage message = new NetMessage();
+            message.Request = new NetMessageRequest();
+            message.Request.createChar = new UserCreateCharacterRequest();
+            message.Request.createChar.Name = username;
+            message.Request.createChar.Class = charClass;
+
+            if (this.connected && NetClient.Instance.Connected)
+            {
+                this.pendingMessage = null;
+                NetClient.Instance.SendMessage(message);
+            }
+            else
+            {
+                this.pendingMessage = message;
+                ConnectToServer();
+            }
+        }
+
+
+        public void SendGameEnter(int Charidx)
+        {
 
         }
+
+
+
+
 
 
     }

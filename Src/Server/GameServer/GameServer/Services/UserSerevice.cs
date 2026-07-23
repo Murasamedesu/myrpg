@@ -100,36 +100,64 @@ namespace GameServer.Services
             sender.SendData(data, 0, data.Length);
         }
 
-        private void OnCreateCharacter(NetConnection<NetSession> sender, UserCreateCharacterRequest request)
+        // 创建角色
+        void OnCreateCharacter(NetConnection<NetSession> sender, UserCreateCharacterRequest request)
         {
             Log.InfoFormat("UserCreateCharacterRequest: Name:{0}  Class:{1}", request.Name, request.Class);
-
-            TCharacter character = new TCharacter()
-            {
-                Name = request.Name,
-                Class = (int)request.Class,
-                TID = (int)request.Class,
-                MapID = 1,
-                MapPosX = 5000,
-                MapPosY = 4000,
-                MapPosZ = 820,
-            };
-
-
-            DBService.Instance.Entities.Characters.Add(character);
-            sender.Session.User.Player.Characters.Add(character);
-            DBService.Instance.Entities.SaveChanges();
-
+            TCharacter character = DBService.Instance.Entities.Characters.Where(n => n.Name == request.Name).FirstOrDefault();
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
             message.Response.createChar = new UserCreateCharacterResponse();
-            message.Response.createChar.Result = Result.Success;
-            message.Response.createChar.Errormsg = "None";
 
+            if (character == null)
+            {
+                character = new TCharacter()
+                {
+                    Name = request.Name,
+                    Class = (int)request.Class,
+                    TID = (int)request.Class,
+                    MapID = 1,
+                    MapPosX = 5000,
+                    MapPosY = 4000,
+                    MapPosZ = 820,
+                };
+
+
+                DBService.Instance.Entities.Characters.Add(character);
+                sender.Session.User.Player.Characters.Add(character);
+                DBService.Instance.Entities.SaveChanges();
+
+
+                message.Response.createChar.Result = Result.Success;
+                message.Response.createChar.Errormsg = "None";
+
+                // 从数据库中加载角色信息
+                foreach (var c in sender.Session.User.Player.Characters)
+                {
+                    NCharacterInfo info = new NCharacterInfo();
+                    info.Id = c.ID;
+                    info.Name = c.Name;
+                    info.Type = CharacterType.Player;
+                    info.Class = (CharacterClass)c.Class;
+                    info.Tid = c.TID;
+                    message.Response.createChar.Characters.Add(info);
+                }
+            }
+            else
+            {
+                message.Response.createChar.Result = Result.Failed;
+                message.Response.createChar.Errormsg = "角色名称已经被占用";
+            }
             byte[] data = PackageHandler.PackMessage(message);
             sender.SendData(data, 0, data.Length);
         }
 
+
+        // 删除角色
+        void OnDeleteCharacter(NetConnection<NetSession> sender, UserCreateCharacterRequest request)
+        {
+
+        }
 
     }
 }
