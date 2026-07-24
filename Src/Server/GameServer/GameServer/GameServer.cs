@@ -11,6 +11,7 @@ using System.Threading;
 
 using Network;
 using GameServer.Services;
+using GameServer.Managers;
 
 namespace GameServer
 {
@@ -26,6 +27,8 @@ namespace GameServer
             network = new NetService();
             network.Init(Port);
             DBService.Instance.Init();
+            DataManager.Instance.Load();
+            MapManager.Instance.Init();
             UserService.Instance.Init();
             thread = new Thread(new ThreadStart(this.Update));
             
@@ -50,11 +53,13 @@ namespace GameServer
 
         public void Update()
         {
+            var mapManager = MapManager.Instance;
             while (running)
             {
                 Time.Tick();
                 Thread.Sleep(100);
                 //Console.WriteLine("{0} {1} {2} {3} {4}", Time.deltaTime, Time.frameCount, Time.ticks, Time.time, Time.realtimeSinceStartup);
+                mapManager.Update();
             }
         }
     }

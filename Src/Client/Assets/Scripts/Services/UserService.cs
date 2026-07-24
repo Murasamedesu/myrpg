@@ -7,6 +7,8 @@ using Network;
 using UnityEngine;
 
 using SkillBridge.Message;
+using log4net;
+using Models;
 
 namespace Services
 {
@@ -19,6 +21,10 @@ namespace Services
         NetMessage pendingMessage = null;
         bool connected = false;
 
+        bool isQuitGame = false;
+
+
+
         public UserService()
         {
             NetClient.Instance.OnConnect += OnGameServerConnect;
@@ -26,6 +32,10 @@ namespace Services
             MessageDistributer.Instance.Subscribe<UserRegisterResponse>(this.OnUserRegister);
             MessageDistributer.Instance.Subscribe<UserLoginResponse>(this.OnUserLogin);
             MessageDistributer.Instance.Subscribe<UserCreateCharacterResponse>(this.OnUserCreateCharacter);
+            MessageDistributer.Instance.Subscribe<UserGameEnterResponse>(this.OnGameEnter);
+            MessageDistributer.Instance.Subscribe<MapCharacterEnterResponse>(this.OnCharacterEnter);
+            
+            
         }
 
         public void Dispose()
@@ -33,6 +43,9 @@ namespace Services
             MessageDistributer.Instance.Unsubscribe<UserRegisterResponse>(this.OnUserRegister);
             MessageDistributer.Instance.Unsubscribe<UserLoginResponse>(this.OnUserLogin);
             MessageDistributer.Instance.Unsubscribe<UserCreateCharacterResponse>(this.OnUserCreateCharacter);
+            MessageDistributer.Instance.Unsubscribe<UserGameEnterResponse>(this.OnGameEnter);
+            MessageDistributer.Instance.Unsubscribe<MapCharacterEnterResponse>(this.OnCharacterEnter);
+
 
 
             NetClient.Instance.OnConnect -= OnGameServerConnect;
@@ -209,12 +222,55 @@ namespace Services
 
         public void SendGameEnter(int Charidx)
         {
+            Debug.LogFormat("UserEnterRequest::characterID: {0}", Charidx);
+
+            // ChatManager.Instance.Init();//进入游戏前初始化
+
+            NetMessage message = new NetMessage();
+            message.Request = new NetMessageRequest();
+            message.Request.gameEnter = new UserGameEnterRequest();
+            message.Request.gameEnter.characterIdx = Charidx;
+            
+            NetClient.Instance.SendMessage(message) ;
+
+        }
+
+        void OnGameEnter(object sender, UserGameEnterResponse response)
+        {
+            Debug.LogFormat("OnGameEnter:{0} [{1}]", response.Result, response.Errormsg);
+            if(response.Result == Result.Success)
+            {
+                //if(response.Character != null)
+                //{
+                //    User.Instance.CurrentCharacter = response.Character;
+                //}
+            }
+
+        }
+
+        void OnCharacterEnter(object sender, MapCharacterEnterResponse response)
+        {
+            Debug.LogFormat("OnCharacterEnter:{0} [{1}]", response.mapId, response.Characters);
+            NCharacterInfo info = response.Characters[0];
+            User.Instance.CurrentCharacter = info;
+            SceneManager.Instance.LoadScene(DataManager.Instance.Maps[response.mapId].Resource);
 
         }
 
 
-
-
+        void OnGameLeave(object sender, UserGameLeaveResponse response)
+        {
+            User.Instance.CurrentCharacter = null;
+            Debug.LogFormat("OnGameLeave:{0} [{1}]", response.Result, response.Errormsg);
+            if (this.isQuitGame)
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+            }
+        }
 
 
     }
