@@ -28,7 +28,7 @@ namespace GameServer
             network.Init(Port);
             DBService.Instance.Init();
             DataManager.Instance.Load();
-            MapManager.Instance.Init();
+            MapService.Instance.Init();
             UserService.Instance.Init();
             thread = new Thread(new ThreadStart(this.Update));
             
