@@ -30,5 +30,7 @@ namespace Models
 
         public PlayerInputController CurrentCharacterObject { get; set; }
 
+        public MapDefine CurrentMapData { get; set; }
+
     }
 }

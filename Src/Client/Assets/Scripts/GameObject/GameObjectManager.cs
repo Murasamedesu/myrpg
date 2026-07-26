@@ -69,9 +69,9 @@ public class GameObjectManager : MonoSingleton<GameObjectManager>
             go.name = "Character_" + character.Id + "_" + character.Name;
 
             Characters[character.entityId] = go;
-            
 
-            //UIWorldElementManager.Instance.AddCharacterNameBar(go.transform, character);
+            UIWorldElementManager.Instance.AddCharacterNameBar(go.transform, character);
+            
         }
         this.InitGameObject(Characters[character.entityId], character);
     }
