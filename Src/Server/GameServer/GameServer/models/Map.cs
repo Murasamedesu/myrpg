@@ -70,7 +70,6 @@ namespace GameServer.Models
             Log.InfoFormat("CharacterEnter: Map:{0} characterId:{1}", this.Define.ID, character.Id);
             character.Info.mapId = this.ID;
             this.MapCharacters[character.Id] = new MapCharacter(conn, character);
-            
             //conn.Session.Response.mapCharacterEnter = new MapCharacterEnterResponse();
             //conn.Session.Response.mapCharacterEnter.mapId = this.Define.ID;
             //foreach (var kv in this.MapCharacters)
@@ -91,21 +90,21 @@ namespace GameServer.Models
             message.Response.mapCharacterEnter.mapId = this.Define.ID;
             message.Response.mapCharacterEnter.Characters.Add(character.Info);
 
-            foreach(var kv in this.MapCharacters)
+            foreach (var kv in this.MapCharacters)
             {
                 message.Response.mapCharacterEnter.Characters.Add(kv.Value.character.Info);
                 if (kv.Value.character != character)
+                {
                     this.AddCharacterEnterMap(kv.Value.connection, character.Info);
-                
+                }
             }
-            
+
             byte[] data = PackageHandler.PackMessage(message);
             conn.SendData(data, 0, data.Length);
-
         }
 
 
-        internal void CharacterLeave(Character cha)
+        internal void CharacterLeave(NCharacterInfo cha)
         {
             Log.InfoFormat("CharacterLeave: Map:{0} characterId:{1}", this.Define.ID, cha.Id);
             foreach (var kv in this.MapCharacters)
@@ -127,19 +126,20 @@ namespace GameServer.Models
             //}
             //conn.Session.Response.mapCharacterEnter.Characters.Add(character);
             //conn.SendResponse();
-            if (message.Response.mapCharacterEnter == null)
-            {
-                message.Response.mapCharacterEnter = new MapCharacterEnterResponse();
-                message.Response.mapCharacterEnter.mapId = this.Define.ID;
-            }
+            
+            
+            message.Response.mapCharacterEnter = new MapCharacterEnterResponse();
+            message.Response.mapCharacterEnter.mapId = this.Define.ID;
+  
+            
             message.Response.mapCharacterEnter.Characters.Add(character);
             byte[] data = PackageHandler.PackMessage(message);
             conn.SendData(data, 0, data.Length);
         }
 
-        void SendCharacterLeaveMap(NetConnection<NetSession> conn, Character character)
+        void SendCharacterLeaveMap(NetConnection<NetSession> conn, NCharacterInfo character)
         {
-            Log.InfoFormat("SendCharacterLeaveMap To {0}:{1} : Map:{2} Character:{3}:{4}", conn.Session.Character.Id, conn.Session.Character.Info.Name, this.Define.ID, character.Id, character.Info.Name);
+            
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
 
@@ -169,10 +169,10 @@ namespace GameServer.Models
                     //    kv.Value.character.Ride = entity.Param;
                     //}
                 }
-                //else
-                //{
-                //    MapService.Instance.SendEntityUpdate(kv.Value.connection, entity);
-                //}
+                else
+                {
+                    MapService.Instance.SendEntityUpdate(kv.Value.connection, entity);
+                }
             }
         }
 

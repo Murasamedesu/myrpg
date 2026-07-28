@@ -24,10 +24,6 @@ public class GameObjectManager : MonoSingleton<GameObjectManager>
         CharacterManager.Instance.OnCharacterLeave -= OnCharacterLeave;
     }
 
-    void Update()
-    {
-
-    }
 
     void OnCharacterEnter(Character cha)
     {
@@ -66,7 +62,7 @@ public class GameObjectManager : MonoSingleton<GameObjectManager>
                 return;
             }
             GameObject go = (GameObject)Instantiate(obj, this.transform);
-            go.name = "Character_" + character.Id + "_" + character.Name;
+            go.name = "Character_" + character.Info.Id + "_" + character.Info.Name;
 
             Characters[character.entityId] = go;
 

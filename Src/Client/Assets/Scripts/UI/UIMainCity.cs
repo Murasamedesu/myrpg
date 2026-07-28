@@ -36,7 +36,11 @@ public class UIMainCity : MonoBehaviour
     }
 
 
-
+    public void BackToCharSelect()
+    {
+        SceneManager.Instance.LoadScene("CharSelect");
+        UserService.Instance.SendGameLeave();
+    }
 
 
 }

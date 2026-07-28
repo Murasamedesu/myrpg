@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Services\MapService.cs" />
     <Compile Include="Assets\Levels\test.cs" />
     <Compile Include="Assets\Scripts\GameObject\GameObjectManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\EntityManager.cs" />
     <Compile Include="Assets\Scripts\UI\UIcharacterSelect.cs" />
     <Compile Include="Assets\Scripts\GameObject\MainPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Entities\Character.cs" />

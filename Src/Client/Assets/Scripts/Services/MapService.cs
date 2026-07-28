@@ -25,7 +25,7 @@ namespace Services
  
             MessageDistributer.Instance.Subscribe<MapCharacterEnterResponse>(this.OnMapCharacterEnter);
             MessageDistributer.Instance.Subscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
-
+            MessageDistributer.Instance.Subscribe<MapEntitySyncResponse>(this.OnMapEntitySync);
 
 
         }
@@ -76,7 +76,11 @@ namespace Services
         private void OnMapCharacterLeave(object sender, MapCharacterLeaveResponse response)
         {
 
-
+            Debug.LogFormat("OnMapCharacterLeave: CharID:{0}", response.characterId);
+            if (response.characterId != User.Instance.CurrentCharacter.Id)
+                CharacterManager.Instance.RemoveCharacter(response.characterId);
+            else
+                CharacterManager.Instance.Clear();
 
 
         }
@@ -119,7 +123,7 @@ namespace Services
             sb.AppendLine();
             foreach (var entity in response.entitySyncs)
             {
-                //EntityManager.Instance.OnEntitySync(entity);
+                EntityManager.Instance.OnEntitySync(entity);
                 sb.AppendFormat("    [{0}]evt:{1} entity:{2}", entity.Id, entity.Event, entity.Entity.String());
                 sb.AppendLine();
             }

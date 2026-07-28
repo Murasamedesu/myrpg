@@ -41268,8 +41268,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1415483401}
+        m_TargetAssemblyTypeName: UIMainCity, Assembly-CSharp
         m_MethodName: BackToCharSelect
         m_Mode: 1
         m_Arguments:

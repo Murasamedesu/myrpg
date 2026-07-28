@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SkillBridge.Message;
-using UnityEditorInternal;
 using Services;
 using System.IO.IsolatedStorage;
 
@@ -45,10 +44,6 @@ public class PlayerInputController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
 
     void FixedUpdate()
     {
@@ -143,7 +138,7 @@ public class PlayerInputController : MonoBehaviour
     {
         if (entityController != null)
         {
-            entityController.OnEntityEvent(entityEvent, param);
+            entityController.OnEntityEvent(entityEvent);
         }
         MapService.Instance.SendMapEntitySync(entityEvent, this.character.EntityData, param);
     }

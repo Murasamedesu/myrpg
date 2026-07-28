@@ -37,7 +37,7 @@ namespace Managers
         public void Clear()
         {
             int[] keys = this.Characters.Keys.ToArray();
-            foreach (var key in keys)
+            foreach (var key in keys) 
             {
                 this.RemoveCharacter(key);
             }
@@ -50,20 +50,20 @@ namespace Managers
             Character character = new Character(cha);
             //this.Characters[cha.EntityId] = character;
             this.Characters[cha.Id] = character;
-            //EntityManager.Instance.AddEntity(character);
+            EntityManager.Instance.AddEntity(character);
             if (OnCharacterEnter != null)
             {
                 OnCharacterEnter(character);
             }
         }
-
+        
 
         public void RemoveCharacter(int entityId)
         {
             Debug.LogFormat("RemoveCharacter:{0}", entityId);
             if (this.Characters.ContainsKey(entityId))
             {
-                //EntityManager.Instance.RemoveEntity(this.Characters[entityId].Info.Entity);
+                EntityManager.Instance.RemoveEntity(this.Characters[entityId].Info.Entity);
                 if (OnCharacterLeave != null)
                 {
                     OnCharacterLeave(this.Characters[entityId]);
