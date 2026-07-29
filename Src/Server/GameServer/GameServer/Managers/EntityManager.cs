@@ -24,7 +24,7 @@ namespace GameServer.Managers
         {
             AllEntities.Add(entity);
             entity.EntityData.Id = ++this.idx;
-
+            
             List<Entity> entities = null;
             if(!MapEntities.TryGetValue(mapId , out entities))
             {

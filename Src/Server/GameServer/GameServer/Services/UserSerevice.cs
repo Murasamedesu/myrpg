@@ -67,6 +67,7 @@ namespace GameServer.Services
                     NCharacterInfo info = new NCharacterInfo();
                     info.Id = c.ID;
                     info.Name = c.Name;
+                    info.Type = CharacterType.Player;
                     info.Class = (CharacterClass)c.Class;
                     message.Response.userLogin.Userinfo.Player.Characters.Add(info);
                 }
@@ -140,10 +141,12 @@ namespace GameServer.Services
                 {
                     NCharacterInfo info = new NCharacterInfo();
                     info.Id = c.ID;
+                    //info.Id = 0;
                     info.Name = c.Name;
                     info.Type = CharacterType.Player;
                     info.Class = (CharacterClass)c.Class;
-                    info.Tid = c.TID;
+                    info.Tid = c.ID;
+                    //info.Tid = c.ID;
                     message.Response.createChar.Characters.Add(info);
                 }
             }
@@ -191,7 +194,7 @@ namespace GameServer.Services
 
 
             CharacterManager.Instance.RemoveCharacter(character.Id);
-            MapManager.Instance[character.Info.mapId].CharacterLeave(character.Info);
+            MapManager.Instance[character.Info.mapId].CharacterLeave(character);
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
             message.Response.gameLeave = new UserGameLeaveResponse();

@@ -10,6 +10,7 @@ using log4net;
 using Models;
 using Common.Data;
 using Managers;
+using System.Runtime.ConstrainedExecution;
 
 namespace Services
 {
@@ -47,12 +48,11 @@ namespace Services
 
 
 
-
-
         private void OnMapCharacterEnter(object sender, MapCharacterEnterResponse response)
         {
 
             Debug.LogFormat("OnMapCharacterEnter:Map:{0} Count:{1}", response.mapId, response.Characters.Count);
+
             foreach (var cha in response.Characters)
             {
                 if (User.Instance.CurrentCharacter == null || (cha.Type == CharacterType.Player && User.Instance.CurrentCharacter.Id == cha.Id))
@@ -71,14 +71,12 @@ namespace Services
 
 
 
-
-
         private void OnMapCharacterLeave(object sender, MapCharacterLeaveResponse response)
         {
 
-            Debug.LogFormat("OnMapCharacterLeave: CharID:{0}", response.characterId);
-            if (response.characterId != User.Instance.CurrentCharacter.Id)
-                CharacterManager.Instance.RemoveCharacter(response.characterId);
+            Debug.LogFormat("OnMapCharacterLeave: CharID:{0}", response.entityId);
+            if (response.entityId != User.Instance.CurrentCharacter.Id)
+                CharacterManager.Instance.RemoveCharacter(response.entityId);
             else
                 CharacterManager.Instance.Clear();
 

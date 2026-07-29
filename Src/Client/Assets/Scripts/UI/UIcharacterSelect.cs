@@ -91,8 +91,8 @@ public class UIcharacterSelect : MonoBehaviour
         characterView3D.CurrentCharacter = ((int)cha.Class - 1);
         for(int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
         {
-            UICharInfo c = this.uiChars[i].GetComponent<UICharInfo>();
-            c.Selected = idx == i;
+            UICharInfo ci = this.uiChars[i].GetComponent<UICharInfo>();
+            ci.Selected = idx == i;
         }
 
     }
