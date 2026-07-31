@@ -32,7 +32,7 @@ public class UIMinimap : MonoBehaviour
         minimap.overrideSprite = MinimapManager.Instance.LoadCurrentMinimap();
         minimap.SetNativeSize();
         minimap.transform.localPosition = Vector3.zero;
-        //minimapBoundingBox = MinimapManager.Instance.MinimapBoundingBox;
+        minimapBoundingBox = MinimapManager.Instance.MinimapBoundingBox;
         playerTransform = null;
 
     }

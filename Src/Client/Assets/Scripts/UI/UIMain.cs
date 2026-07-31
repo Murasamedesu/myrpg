@@ -6,18 +6,19 @@ using TMPro;
 using Models;
 using SkillBridge.Message;
 using Services;
+using System;
 
 
-public class UIMainCity : MonoBehaviour
+public class UIMain : MonoSingleton<UIMain>
 {
     public TMP_Text avaterName;
     public TMP_Text avaterLevel;
 
 
 
-    void Start()
+    protected override void OnStart()
     {
-        UpdateAvater();
+        this.UpdateAvater();
     }
 
 
@@ -42,5 +43,19 @@ public class UIMainCity : MonoBehaviour
         UserService.Instance.SendGameLeave();
     }
 
+
+    public void OnClickTest()
+    {
+        UITest test = UIManager.Instance.ShoW<UITest>();
+        test.SetTitle("这是一个测试UI");
+        test.OnClose += Test_OnClose;
+
+    }
+
+    private void Test_OnClose(UIWindow sender, UIWindow.WindowResult result)
+    {
+        MessageBox.Show("TEST:: 点击了测试UI对话框的" + result, "对话框响应结果", MessageBoxType.Information);
+
+    }
 
 }
