@@ -22,8 +22,6 @@ public class UIMain : MonoSingleton<UIMain>
     }
 
 
-
-
     void Update()
     {
         

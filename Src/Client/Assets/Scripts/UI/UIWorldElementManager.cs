@@ -8,13 +8,16 @@ public class UIWorldElementManager : MonoSingleton<UIWorldElementManager>
 {
     public GameObject nameBarPrefab;
     //public GameObject npcStatusPrefab;
+    public GameObject npcChoosePrefab;
 
     private Dictionary<Transform, GameObject> elementNames = new Dictionary<Transform, GameObject>();
     //private Dictionary<Transform, GameObject> elementStatus = new Dictionary<Transform, GameObject>();
+    public Dictionary<Transform, GameObject> elementnpcChoose = new Dictionary<Transform, GameObject>();
 
     protected override void OnStart()
     {
         nameBarPrefab.SetActive(false);
+        npcChoosePrefab.SetActive(false);
     }
 
 
@@ -64,8 +67,23 @@ public class UIWorldElementManager : MonoSingleton<UIWorldElementManager>
     //}
 
 
-    void Update()
+
+    //NPC选择高亮特效UI显示
+    public void AddNPCChooseBar(Transform owner)
     {
-        
+        GameObject goNpcBar = Instantiate(npcChoosePrefab, this.transform);
+        goNpcBar.GetComponent<UIWorldElement>().owner = owner;
+        goNpcBar.SetActive(true);
+        this.elementnpcChoose[owner] = goNpcBar;
     }
+
+    public void RemoveNPCChooseBar(Transform owner)
+    {
+        if (this.elementnpcChoose.ContainsKey(owner))
+        {
+            Destroy(this.elementnpcChoose[owner]);
+            this.elementnpcChoose.Remove(owner);
+        }
+    }
+
 }
