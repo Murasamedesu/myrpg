@@ -17,6 +17,8 @@ namespace GameServer
         public int Id { get; set; }
         public string Name { get; set; }
         public int CharacterID { get; set; }
+        public int ItemID { get; set; }
+        public int ItemCount { get; set; }
     
         public virtual TCharacter Character { get; set; }
     }

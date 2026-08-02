@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/30/2026 14:05:49
+-- Date Created: 08/02/2026 13:57:16
 -- Generated from EDMX file: F:\var\mmorpg\myrpg\Src\Server\GameServer\GameServer\Entities.edmx
 -- --------------------------------------------------
 
@@ -82,7 +82,9 @@ GO
 CREATE TABLE [dbo].[CharacterItem] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [CharacterID] int  NOT NULL
+    [CharacterID] int  NOT NULL,
+    [ItemID] int  NOT NULL,
+    [ItemCount] int  NOT NULL
 );
 GO
 

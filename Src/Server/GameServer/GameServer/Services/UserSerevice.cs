@@ -172,13 +172,34 @@ namespace GameServer.Services
             TCharacter dbchar = sender.Session.User.Player.Characters.ElementAt(request.characterIdx);
             Log.InfoFormat("UserGameEnterRequest:characterID:{0},{1} Map:{2}", dbchar.ID, dbchar.Name, dbchar.MapID);
             Character character = CharacterManager.Instance.AddCharacter(dbchar);
-
+            
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
             message.Response.gameEnter = new UserGameEnterResponse();
 
             message.Response.gameEnter.Result = Result.Success;
             message.Response.gameEnter.Errormsg = "None";
+            message.Response.gameEnter.Character = character.Info;
+
+
+
+            ///<summary> 道具系统测试
+            int itemId = 1;
+            bool hasItem = character.ItemManager.HasItem(itemId);
+            Log.InfoFormat("Character {0} has item {1}: {2}", character.Id, itemId, hasItem);
+            if (hasItem)
+            {
+                character.ItemManager.RemoveItem(itemId, 1);
+            }
+            else
+            {
+                character.ItemManager.AddItem(itemId, 2);
+            }
+            Models.Item item = character.ItemManager.GetItem(itemId);
+            Log.InfoFormat("Character {0} 有 item {1} :: {2}", character.Id, itemId, item); 
+            ///</summary>
+
+
 
             byte[] data = PackageHandler.PackMessage(message);
             sender.SendData(data, 0, data.Length);

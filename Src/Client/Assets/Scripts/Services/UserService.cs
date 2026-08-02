@@ -9,6 +9,7 @@ using UnityEngine;
 using SkillBridge.Message;
 using log4net;
 using Models;
+using Managers;
 
 namespace Services
 {
@@ -243,10 +244,11 @@ namespace Services
             Debug.LogFormat("OnGameEnter:{0} [{1}]", response.Result, response.Errormsg);
             if(response.Result == Result.Success)
             {
-                //if (response.Character != null)
-                //{
-                //    User.Instance.CurrentCharacter = response.Character;
-                //}
+                if (response.Character != null)
+                {
+                    User.Instance.CurrentCharacter = response.Character;
+                    ItemManager.Instance.Init(response.Character.Items);
+                }
             }
 
         }
