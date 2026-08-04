@@ -56,4 +56,10 @@ public class UIMain : MonoSingleton<UIMain>
 
     }
 
+    public void OnClickBag()
+    {
+        UIManager.Instance.ShoW<UIBag>();
+    }
+
+
 }

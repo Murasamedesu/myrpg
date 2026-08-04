@@ -30,8 +30,14 @@ namespace GameServer.Entities
             this.Info.mapId = cha.MapID;
             this.Info.Entity = this.EntityData;
             this.Define = DataManager.Instance.Characters[this.Info.Tid];
+
             this.ItemManager = new ItemManager(this);
             this.ItemManager.GetItemInfos(this.Info.Items);
+
+            this.Info.Bag = new NBagInfo();
+            this.Info.Bag.Unlocked = this.Data.TCharacterBag.Unlocked;
+            this.Info.Bag.Items = this.Data.TCharacterBag.Items;
+
 
         }
     }

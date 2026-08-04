@@ -126,8 +126,12 @@ namespace GameServer.Services
                     MapPosY = 4000,
                     MapPosZ = 820,
                 };
+                var bag = new TCharacterBag();
+                bag.TCharacter = character;
+                bag.Items = new byte[0];
+                bag.Unlocked = 20;
 
-
+                character.TCharacterBag = DBService.Instance.Entities.CharacterBags.Add(bag);
                 character = DBService.Instance.Entities.Characters.Add(character);
                 sender.Session.User.Player.Characters.Add(character);
                 DBService.Instance.Entities.SaveChanges();
@@ -193,10 +197,14 @@ namespace GameServer.Services
             }
             else
             {
-                character.ItemManager.AddItem(itemId, 2);
+                character.ItemManager.AddItem(itemId, 100);
+                character.ItemManager.AddItem(2, 200);
+                character.ItemManager.AddItem(3, 30);
+                character.ItemManager.AddItem(4, 120);
             }
             Models.Item item = character.ItemManager.GetItem(itemId);
             Log.InfoFormat("Character {0} 有 item {1} :: {2}", character.Id, itemId, item); 
+            DBService.Instance.Save();
             ///</summary>
 
 
