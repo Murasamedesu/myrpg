@@ -49,13 +49,14 @@ public class UIBag : UIWindow
         {
             slots[i].color = Color.gray;
         }
+        SetTitle();
         yield return null;
     }
 
 
-    public void SetTitle(string title)
+    public void SetTitle()
     {
-        this.PlayerGold.text = User.Instance.CurrentCharacter.Id.ToString();
+        this.PlayerGold.text = User.Instance.CurrentCharacter.Gold.ToString();
 
     }
 

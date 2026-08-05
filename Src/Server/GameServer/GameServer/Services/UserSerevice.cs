@@ -36,32 +36,30 @@ namespace GameServer.Services
         {
             Log.InfoFormat("UserLoginRequest: User:{0}  Pass:{1}", request.User, request.Passward);
 
-            NetMessage message = new NetMessage();
-            message.Response = new NetMessageResponse();
-            message.Response.userLogin = new UserLoginResponse();
+            sender.Session.Response.userLogin = new UserLoginResponse();
 
 
             TUser user = DBService.Instance.Entities.Users.Where(u => u.Username == request.User).FirstOrDefault();
             if (user == null)
             {
-                message.Response.userLogin.Result = Result.Failed;
-                message.Response.userLogin.Errormsg = "用户不存在";
+                sender.Session.Response.userLogin.Result = Result.Failed;
+                sender.Session.Response.userLogin.Errormsg = "用户不存在";
             }
             else if (user.Password != request.Passward)
             {
-                message.Response.userLogin.Result = Result.Failed;
-                message.Response.userLogin.Errormsg = "密码错误";
+                sender.Session.Response.userLogin.Result = Result.Failed;
+                sender.Session.Response.userLogin.Errormsg = "密码错误";
             }
             else
             {
                 sender.Session.User = user;
-                message.Response.userLogin.Result = Result.Success;
-                message.Response.userLogin.Errormsg = "None";
+                sender.Session.Response.userLogin.Result = Result.Success;
+                sender.Session.Response.userLogin.Errormsg = "None";
 
-                message.Response.userLogin.Userinfo = new NUserInfo();
-                message.Response.userLogin.Userinfo.Id = (int)user.ID;  // 默认硬编码为1方便测试,更改为动态用户编码
-                message.Response.userLogin.Userinfo.Player = new NPlayerInfo();
-                message.Response.userLogin.Userinfo.Player.Id = user.Player.ID;
+                sender.Session.Response.userLogin.Userinfo = new NUserInfo();
+                sender.Session.Response.userLogin.Userinfo.Id = (int)user.ID;  // 默认硬编码为1方便测试,更改为动态用户编码
+                sender.Session.Response.userLogin.Userinfo.Player = new NPlayerInfo();
+                sender.Session.Response.userLogin.Userinfo.Player.Id = user.Player.ID;
                 foreach (var c in user.Player.Characters)
                 {
                     NCharacterInfo info = new NCharacterInfo();
@@ -69,12 +67,11 @@ namespace GameServer.Services
                     info.Name = c.Name;
                     info.Type = CharacterType.Player;
                     info.Class = (CharacterClass)c.Class;
-                    message.Response.userLogin.Userinfo.Player.Characters.Add(info);
+                    sender.Session.Response.userLogin.Userinfo.Player.Characters.Add(info);
                 }
 
             }
-            byte[] data = PackageHandler.PackMessage(message);
-            sender.SendData(data, 0, data.Length);
+            sender.SendResponse();
         }
 
         void OnRegister(NetConnection<NetSession> sender, UserRegisterRequest request)
@@ -125,11 +122,14 @@ namespace GameServer.Services
                     MapPosX = 5000,
                     MapPosY = 4000,
                     MapPosZ = 820,
+                    Gold = 100000,
                 };
                 var bag = new TCharacterBag();
                 bag.TCharacter = character;
                 bag.Items = new byte[0];
                 bag.Unlocked = 20;
+
+
 
                 character.TCharacterBag = DBService.Instance.Entities.CharacterBags.Add(bag);
                 character = DBService.Instance.Entities.Characters.Add(character);
@@ -222,21 +222,21 @@ namespace GameServer.Services
             Log.InfoFormat("UserGameLeaveRequest: characterID:{0}:{1} Map:{2}", character.Id, character.Info.Name, character.Info.mapId);
 
 
-            CharacterLeave(character);
-            NetMessage message = new NetMessage();
-            message.Response = new NetMessageResponse();
-            message.Response.gameLeave = new UserGameLeaveResponse();
-            message.Response.gameLeave.Result = Result.Success;
-            message.Response.gameLeave.Errormsg = "None";
+            //CharacterLeave(character);
+            //NetMessage message = new NetMessage();
+            //message.Response = new NetMessageResponse();
+            //message.Response.gameLeave = new UserGameLeaveResponse();
+            //message.Response.gameLeave.Result = Result.Success;
+            //message.Response.gameLeave.Errormsg = "None";
 
-            byte[] data = PackageHandler.PackMessage(message);
-            sender.SendData(data, 0, data.Length);
-            //this.CharacterLeave(character);
-            //sender.Session.Response.gameLeave = new UserGameLeaveResponse();
-            //sender.Session.Response.gameLeave.Result = Result.Success;
-            //sender.Session.Response.gameLeave.Errormsg = "None";
+            //byte[] data = PackageHandler.PackMessage(message);
+            //sender.SendData(data, 0, data.Length);
+            this.CharacterLeave(character);
+            sender.Session.Response.gameLeave = new UserGameLeaveResponse();
+            sender.Session.Response.gameLeave.Result = Result.Success;
+            sender.Session.Response.gameLeave.Errormsg = "None";
 
-            //sender.SendResponse();
+            sender.SendResponse();
         }
 
         public void CharacterLeave(Character character)

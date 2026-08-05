@@ -32,5 +32,11 @@ namespace Models
 
         public MapDefine CurrentMapData { get; set; }
 
+
+        public void AddGold(int gold)
+        {
+            this.CurrentCharacter.Gold += gold;
+        }
+
     }
 }

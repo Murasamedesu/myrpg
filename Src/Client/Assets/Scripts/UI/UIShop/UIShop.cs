@@ -1,4 +1,5 @@
 using Common.Data;
+using Managers;
 using Models;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,7 +60,14 @@ public class UIShop : UIWindow
             MessageBox.Show("请先选择要购买的物品", "提示", MessageBoxType.Information);
             return;
         }
-        
+
+        if (!ShopManager.Instance.BuyItem(this.shop.ID, this.selectedItem.ShopItemID))
+        {
+
+        }
+
+
+
     }   
 
 
