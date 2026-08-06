@@ -61,5 +61,8 @@ public class UIMain : MonoSingleton<UIMain>
         UIManager.Instance.ShoW<UIBag>();
     }
 
-
+    public void OnClickCharEquip()
+    {
+        UIManager.Instance.ShoW<UICharEquip>();
+    }
 }

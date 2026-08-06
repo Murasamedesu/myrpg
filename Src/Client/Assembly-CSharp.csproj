@@ -65,8 +65,10 @@
     <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
     <Compile Include="Assets\Scripts\GameObject\NpcController.cs" />
     <Compile Include="Assets\Scripts\UI\UIShop\UIShopItem.cs" />
+    <Compile Include="Assets\Scripts\Managers\EquipManager.cs" />
     <Compile Include="Assets\Scripts\Managers\MinimapManager.cs" />
     <Compile Include="Assets\Scripts\Managers\BagManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UICharEquip\UIEquipItem.cs" />
     <Compile Include="Assets\Scripts\Entities\Entity.cs" />
     <Compile Include="Assets\Scripts\UI\UIRegister.cs" />
     <Compile Include="Assets\Scripts\GameObject\EntityController.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Assets\Scripts\UI\UIShop\UIShop.cs" />
     <Compile Include="Assets\Scripts\UI\UIWorldElement.cs" />
     <Compile Include="Assets\Scripts\UI\UIWorldElementManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UICharEquip\UICharEquip.cs" />
     <Compile Include="Assets\Scripts\UI\BagView\BagView.cs" />
     <Compile Include="Assets\Scripts\Scene\SceneManager.cs" />
     <Compile Include="Assets\Scripts\UI\UICharInfo.cs" />

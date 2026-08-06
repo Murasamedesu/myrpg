@@ -123,6 +123,7 @@ namespace GameServer.Services
                     MapPosY = 4000,
                     MapPosZ = 820,
                     Gold = 100000,
+                    Equips = new byte[28]
                 };
                 var bag = new TCharacterBag();
                 bag.TCharacter = character;
@@ -188,23 +189,23 @@ namespace GameServer.Services
 
 
             ///<summary> 道具系统测试
-            int itemId = 1;
-            bool hasItem = character.ItemManager.HasItem(itemId);
-            Log.InfoFormat("Character {0} has item {1}: {2}", character.Id, itemId, hasItem);
-            if (hasItem)
-            {
-                character.ItemManager.RemoveItem(itemId, 1);
-            }
-            else
-            {
-                character.ItemManager.AddItem(itemId, 100);
-                character.ItemManager.AddItem(2, 200);
-                character.ItemManager.AddItem(3, 30);
-                character.ItemManager.AddItem(4, 120);
-            }
-            Models.Item item = character.ItemManager.GetItem(itemId);
-            Log.InfoFormat("Character {0} 有 item {1} :: {2}", character.Id, itemId, item); 
-            DBService.Instance.Save();
+            //int itemId = 1;
+            //bool hasItem = character.ItemManager.HasItem(itemId);
+            //Log.InfoFormat("Character {0} has item {1}: {2}", character.Id, itemId, hasItem);
+            //if (hasItem)
+            //{
+            //    character.ItemManager.RemoveItem(itemId, 1);
+            //}
+            //else
+            //{
+            //    character.ItemManager.AddItem(itemId, 100);
+            //    character.ItemManager.AddItem(2, 200);
+            //    character.ItemManager.AddItem(3, 30);
+            //    character.ItemManager.AddItem(4, 120);
+            //}
+            //Models.Item item = character.ItemManager.GetItem(itemId);
+            //Log.InfoFormat("Character {0} 有 item {1} :: {2}", character.Id, itemId, item); 
+            //DBService.Instance.Save();
             ///</summary>
 
 
