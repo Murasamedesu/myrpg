@@ -266,6 +266,9 @@ namespace SkillBridge.Message
         [global::ProtoBuf.ProtoMember(13)]
         public QuestAcceptRequest questAccept { get; set; }
 
+        [global::ProtoBuf.ProtoMember(14)]
+        public QuestSubmitRequest questSubmit { get; set; }
+
     }
 
     [global::ProtoBuf.ProtoContract()]
@@ -310,6 +313,9 @@ namespace SkillBridge.Message
 
         [global::ProtoBuf.ProtoMember(12)]
         public QuestAcceptResponse questAccept { get; set; }
+
+        [global::ProtoBuf.ProtoMember(13)]
+        public QuestSubmitResponse questSubmit { get; set; }
 
         [global::ProtoBuf.ProtoMember(100)]
         public StatusNotify statusNotify { get; set; }
@@ -735,6 +741,9 @@ namespace SkillBridge.Message
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(3, Name = @"quest")]
+        public NQuestInfo Quest { get; set; }
+
     }
 
     [global::ProtoBuf.ProtoContract()]
@@ -762,6 +771,9 @@ namespace SkillBridge.Message
         [global::ProtoBuf.ProtoMember(2, Name = @"errormsg")]
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"quest")]
+        public NQuestInfo Quest { get; set; }
 
     }
 

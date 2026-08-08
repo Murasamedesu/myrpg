@@ -7,6 +7,9 @@ using Entities;
 
 public class UINameBar : MonoBehaviour
 {
+    public Image avatar;
+    
+
     public TMP_Text avaterName;
     public Image profileimage;
 
@@ -24,7 +27,14 @@ public class UINameBar : MonoBehaviour
     {
        if(character != null)
         {
-
+            if(character.Info.Type == SkillBridge.Message.CharacterType.Monster)
+            {
+                this.avatar.gameObject.SetActive(false);
+            }
+            else
+            {
+                this.avatar.gameObject.SetActive(true);
+            }
         }
     }
 

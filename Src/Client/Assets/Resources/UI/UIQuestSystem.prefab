@@ -509,7 +509,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1595062219925938237}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -634,9 +634,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6283724890130784976}
+      - m_Target: {fileID: 4454758349226924593}
         m_TargetAssemblyTypeName: UIWindow, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OnCloseClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1426,7 +1426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 515.5108, y: -160.56}
+  m_AnchoredPosition: {x: 515.5108, y: -92.119995}
   m_SizeDelta: {x: 991.0216, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2464898907055355021
@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  m_text: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b750fd0e0e69b6b46b6173c37d17d26b, type: 2}
   m_sharedMaterial: {fileID: 3138821620333726916, guid: b750fd0e0e69b6b46b6173c37d17d26b,
@@ -4653,7 +4653,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1374801512292929432}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5126,7 +5126,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8521213437910767126}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.53513205
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

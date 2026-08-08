@@ -1,4 +1,5 @@
 using Common.Data;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,7 +25,7 @@ public class UIQuestSystem : UIWindow
         this.listBranch.onItemSelected += this.OnQuestSelected;
         this.Tabs.OnTabSelect += OnSelectTab;
         RefreshUI();
-        //QuestManager.Instance.OnQuestChanged += RefreshUI;
+        QuestManager.Instance.OnQuestChanged += RefreshUI;
     }
 
 
@@ -44,13 +45,13 @@ public class UIQuestSystem : UIWindow
 
     private void OnDestroy()
     {
-        //QuestManager.Instance.OnQuestChanged -= RefreshUI;
+        QuestManager.Instance.OnQuestChanged -= RefreshUI;
     }
 
     void RefreshUI()
     {
         ClearAllQuestList();
-        //InitAllQuestItems();
+        InitAllQuestItems();
     }
 
     void ClearAllQuestList()
@@ -59,38 +60,38 @@ public class UIQuestSystem : UIWindow
         this.listBranch.RemoveAll();
     }
 
-    //void InitAllQuestItems()
-    //{
-    //    foreach(var kv in QuestManager.Instance.allQuests)
-    //    {
-    //        if (showAvailableList)
-    //        {
-    //            if(kv.Value.Info != null)
-    //            {
-    //                continue;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (kv.Value.Info == null)
-    //            {
-    //                continue;
-    //            }
-    //        }
+    void InitAllQuestItems()
+    {
+        foreach (var kv in QuestManager.Instance.allQuests)
+        {
+            if (showAvailableList)
+            {
+                if (kv.Value.Info != null)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if (kv.Value.Info == null)
+                {
+                    continue;
+                }
+            }
 
-    //        GameObject go = Instantiate(itemPrefab, kv.Value.Define.Type == QuestType.Main ? this.listMain.transform : this.listBranch.transform);
-    //        UIQuestItem ui = go.GetComponent<UIQuestItem>();
-    //        ui.SetQuestInfo(kv.Value);
-    //        if (kv.Value.Define.Type == QuestType.Main)
-    //        {
-    //            this.listMain.AddItem(ui);
-    //        }
-    //        else
-    //        {
-    //            this.listBranch.AddItem(ui);
-    //        }
-    //    }
-    //}
+            GameObject go = Instantiate(itemPrefab, kv.Value.Define.Type == QuestType.Main ? this.listMain.transform : this.listBranch.transform);
+            UIQuestItem ui = go.GetComponent<UIQuestItem>();
+            ui.SetQuestInfo(kv.Value);
+            if (kv.Value.Define.Type == QuestType.Main)
+            {
+                this.listMain.AddItem(ui);
+            }
+            else
+            {
+                this.listBranch.AddItem(ui);
+            }
+        }
+    }
 
 
 

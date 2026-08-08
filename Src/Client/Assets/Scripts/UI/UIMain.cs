@@ -65,4 +65,9 @@ public class UIMain : MonoSingleton<UIMain>
     {
         UIManager.Instance.ShoW<UICharEquip>();
     }
+
+    public void OnClickQuestList()
+    {
+        UIManager.Instance.ShoW<UIQuestSystem>();
+    }
 }

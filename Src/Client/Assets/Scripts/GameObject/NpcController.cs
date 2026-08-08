@@ -19,6 +19,9 @@ public class NpcController : MonoBehaviour
     private bool inInteractive = false;
     private SkinnedMeshRenderer rendererr;
 
+    NpcQuestStatus questStatus;
+
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -28,8 +31,31 @@ public class NpcController : MonoBehaviour
         rendererr = GetComponentInChildren<SkinnedMeshRenderer>();
         originRotation = transform.rotation;
         this.StartCoroutine(Action());
+        RefreshNpcStatus();
+        QuestManager.Instance.onQuestStatusChanged += OnQuestStatusChanged;
 
     }
+
+    void OnQuestStatusChanged(Quest quest)
+    {
+        this.RefreshNpcStatus();
+    }
+
+    void RefreshNpcStatus()
+    {
+        questStatus = QuestManager.Instance.GetQuestStatusByNpc(this.npcID);
+        UIWorldElementManager.Instance.AddNpcQuestStatus(this.transform, questStatus);
+    }
+
+    private void OnDestroy()
+    {
+        QuestManager.Instance.onQuestStatusChanged -= OnQuestStatusChanged;
+        if(UIWorldElementManager.Instance != null)
+        {
+            UIWorldElementManager.Instance.RemoveNpcQuestStatus(this.transform);
+        }
+    }
+
 
     private void OnMouseEnter()
     {

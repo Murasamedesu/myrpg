@@ -7,17 +7,18 @@ using Managers;
 public class UIWorldElementManager : MonoSingleton<UIWorldElementManager>
 {
     public GameObject nameBarPrefab;
-    //public GameObject npcStatusPrefab;
+    public GameObject npcStatusPrefab;
     public GameObject npcChoosePrefab;
 
     private Dictionary<Transform, GameObject> elementNames = new Dictionary<Transform, GameObject>();
-    //private Dictionary<Transform, GameObject> elementStatus = new Dictionary<Transform, GameObject>();
+    private Dictionary<Transform, GameObject> elementStatus = new Dictionary<Transform, GameObject>();
     public Dictionary<Transform, GameObject> elementnpcChoose = new Dictionary<Transform, GameObject>();
 
     protected override void OnStart()
     {
         nameBarPrefab.SetActive(false);
         npcChoosePrefab.SetActive(false);
+        npcStatusPrefab.SetActive(false);
     }
 
 
@@ -40,31 +41,31 @@ public class UIWorldElementManager : MonoSingleton<UIWorldElementManager>
         }
     }
 
-    //public void AddNpcQuestStatus(Transform owner, NpcQuestStatus status)
-    //{
-    //    if (this.elementStatus.ContainsKey(owner))
-    //    {
-    //        elementStatus[owner].GetComponent<UIQuestStatus>().SetQuestStatus(status);
-    //    }
-    //    else
-    //    {
-    //        GameObject go = Instantiate(npcStatusPrefab, this.transform);
-    //        go.name = "NpcQuestStatus" + owner.name;
-    //        go.GetComponent<UIWorldElement>().owner = owner;
-    //        go.GetComponent<UIQuestStatus>().SetQuestStatus(status);
-    //        go.SetActive(true);
-    //        this.elementStatus[owner] = go;
-    //    }
-    //}
+    public void AddNpcQuestStatus(Transform owner, NpcQuestStatus status)
+    {
+        if (this.elementStatus.ContainsKey(owner))
+        {
+            elementStatus[owner].GetComponent<UIQuestStatus>().SetQuestStatus(status);
+        }
+        else
+        {
+            GameObject go = Instantiate(npcStatusPrefab, this.transform);
+            go.name = "NpcQuestStatus" + owner.name;
+            go.GetComponent<UIWorldElement>().owner = owner;
+            go.GetComponent<UIQuestStatus>().SetQuestStatus(status);
+            go.SetActive(true);
+            this.elementStatus[owner] = go;
+        }
+    }
 
-    //public void RemoveNpcQuestStatus(Transform owner)
-    //{
-    //    if (this.elementStatus.ContainsKey(owner))
-    //    {
-    //        Destroy(this.elementStatus[owner]);
-    //        this.elementStatus.Remove(owner);
-    //    }
-    //}
+    public void RemoveNpcQuestStatus(Transform owner)
+    {
+        if (this.elementStatus.ContainsKey(owner))
+        {
+            Destroy(this.elementStatus[owner]);
+            this.elementStatus.Remove(owner);
+        }
+    }
 
 
 

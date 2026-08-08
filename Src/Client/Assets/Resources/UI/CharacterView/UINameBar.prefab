@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b110e3573ce5148a561372b1ef90ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatar: {fileID: 7794839350253766250}
   avaterName: {fileID: 5815799598996865655}
   profileimage: {fileID: 3882604590788282299}
   ArcherArcherAvatar: {fileID: 21300000, guid: d8c9a806943bd9f48bc7bf7a6081bf4e, type: 3}
