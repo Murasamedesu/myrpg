@@ -57,7 +57,7 @@ namespace GameServer.Services
                 sender.Session.Response.userLogin.Errormsg = "None";
 
                 sender.Session.Response.userLogin.Userinfo = new NUserInfo();
-                sender.Session.Response.userLogin.Userinfo.Id = (int)user.ID;  // 默认硬编码为1方便测试,更改为动态用户编码
+                sender.Session.Response.userLogin.Userinfo.Id = (int)user.ID;
                 sender.Session.Response.userLogin.Userinfo.Player = new NPlayerInfo();
                 sender.Session.Response.userLogin.Userinfo.Player.Id = user.Player.ID;
                 foreach (var c in user.Player.Characters)
@@ -78,28 +78,25 @@ namespace GameServer.Services
         {
             Log.InfoFormat("UserRegisterRequest: User:{0}  Pass:{1}", request.User, request.Passward);
 
-            NetMessage message = new NetMessage();
-            message.Response = new NetMessageResponse();
-            message.Response.userRegister = new UserRegisterResponse();
+            sender.Session.Response.userRegister = new UserRegisterResponse();
 
 
             TUser user = DBService.Instance.Entities.Users.Where(u => u.Username == request.User).FirstOrDefault();
             if (user != null)
             {
-                message.Response.userRegister.Result = Result.Failed;
-                message.Response.userRegister.Errormsg = "用户已存在.";
+                sender.Session.Response.userRegister.Result = Result.Failed;
+                sender.Session.Response.userRegister.Errormsg = "用户已存在.";
             }
             else
             {
                 TPlayer player = DBService.Instance.Entities.Players.Add(new TPlayer());
                 DBService.Instance.Entities.Users.Add(new TUser() { Username = request.User, Password = request.Passward, Player = player });
                 DBService.Instance.Entities.SaveChanges();
-                message.Response.userRegister.Result = Result.Success;
-                message.Response.userRegister.Errormsg = "None";
+                sender.Session.Response.userRegister.Result = Result.Success;
+                sender.Session.Response.userRegister.Errormsg = "None";
             }
 
-            byte[] data = PackageHandler.PackMessage(message);
-            sender.SendData(data, 0, data.Length);
+            sender.SendResponse();
         }
 
         // 创建角色
@@ -107,9 +104,6 @@ namespace GameServer.Services
         {
             Log.InfoFormat("UserCreateCharacterRequest: Name:{0}  Class:{1}", request.Name, request.Class);
             TCharacter character = DBService.Instance.Entities.Characters.Where(n => n.Name == request.Name).FirstOrDefault();
-            NetMessage message = new NetMessage();
-            message.Response = new NetMessageResponse();
-            message.Response.createChar = new UserCreateCharacterResponse();
 
             if (character == null)
             {
@@ -137,9 +131,9 @@ namespace GameServer.Services
                 sender.Session.User.Player.Characters.Add(character);
                 DBService.Instance.Entities.SaveChanges();
 
-
-                message.Response.createChar.Result = Result.Success;
-                message.Response.createChar.Errormsg = "None";
+                sender.Session.Response.createChar = new UserCreateCharacterResponse();
+                sender.Session.Response.createChar.Result = Result.Success;
+                sender.Session.Response.createChar.Errormsg = "None";
 
                 // 从数据库中加载角色信息
                 foreach (var c in sender.Session.User.Player.Characters)
@@ -152,16 +146,15 @@ namespace GameServer.Services
                     info.Class = (CharacterClass)c.Class;
                     info.Tid = c.ID;
                     //info.Tid = c.ID;
-                    message.Response.createChar.Characters.Add(info);
+                    sender.Session.Response.createChar.Characters.Add(info);
                 }
             }
             else
             {
-                message.Response.createChar.Result = Result.Failed;
-                message.Response.createChar.Errormsg = "角色名称已经被占用";
+                sender.Session.Response.createChar.Result = Result.Failed;
+                sender.Session.Response.createChar.Errormsg = "角色名称已经被占用";
             }
-            byte[] data = PackageHandler.PackMessage(message);
-            sender.SendData(data, 0, data.Length);
+            sender.SendResponse();
         }
 
 
@@ -178,13 +171,11 @@ namespace GameServer.Services
             Log.InfoFormat("UserGameEnterRequest:characterID:{0},{1} Map:{2}", dbchar.ID, dbchar.Name, dbchar.MapID);
             Character character = CharacterManager.Instance.AddCharacter(dbchar);
             
-            NetMessage message = new NetMessage();
-            message.Response = new NetMessageResponse();
-            message.Response.gameEnter = new UserGameEnterResponse();
+            sender.Session.Response.gameEnter = new UserGameEnterResponse();
 
-            message.Response.gameEnter.Result = Result.Success;
-            message.Response.gameEnter.Errormsg = "None";
-            message.Response.gameEnter.Character = character.Info;
+            sender.Session.Response.gameEnter.Result = Result.Success;
+            sender.Session.Response.gameEnter.Errormsg = "None";
+            sender.Session.Response.gameEnter.Character = character.Info;
 
 
 
@@ -210,8 +201,7 @@ namespace GameServer.Services
 
 
 
-            byte[] data = PackageHandler.PackMessage(message);
-            sender.SendData(data, 0, data.Length);
+            sender.SendResponse();
             sender.Session.Character = character;
             MapManager.Instance[dbchar.MapID].CharacterEnter(sender, character);
 

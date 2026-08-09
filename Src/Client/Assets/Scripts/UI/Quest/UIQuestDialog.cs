@@ -1,7 +1,9 @@
 using Models;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Purchasing;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIQuestDialog : UIWindow
 {
@@ -15,7 +17,7 @@ public class UIQuestDialog : UIWindow
 
     void Start()
     {
-        
+
     }
 
     public void SetQuest(Quest quest)
@@ -53,6 +55,7 @@ public class UIQuestDialog : UIWindow
             if(this.questInfo != null)
             {
                 this.questInfo.SetQuestInfo(quest);
+                
             }
         }
     }

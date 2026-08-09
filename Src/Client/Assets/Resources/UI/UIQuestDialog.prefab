@@ -260,12 +260,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8139f976c128349ad03d7841320d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 1801870225823491240}
-  targets: []
+  title: {fileID: 2564699716152535451}
+  targets: {fileID: 1801870225823491240}
   description: {fileID: 2824511069996606966}
-  rewardItems: {fileID: 0}
+  rewardItems: {fileID: 1857893808992513839, guid: 0a185a5645bec4643a1076a700fe47b1,
+    type: 3}
   rewardMoney: {fileID: 1718641375962861309}
   rewardExp: {fileID: 6348441556200992691}
+  Pages:
+  - {fileID: 7619826935343809282}
 --- !u!1 &2214297896105383057
 GameObject:
   m_ObjectHideFlags: 0

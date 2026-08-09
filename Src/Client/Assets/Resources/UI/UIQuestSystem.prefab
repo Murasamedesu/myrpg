@@ -509,7 +509,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1595062219925938237}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2821,13 +2821,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8139f976c128349ad03d7841320d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 6581876125931893468}
-  targets: []
+  title: {fileID: 5790261849583427936}
+  targets: {fileID: 6581876125931893468}
   description: {fileID: 2235060753381604230}
-  rewardItems: {fileID: 4234302790435548859, guid: 0a185a5645bec4643a1076a700fe47b1,
+  rewardItems: {fileID: 1857893808992513839, guid: 0a185a5645bec4643a1076a700fe47b1,
     type: 3}
   rewardMoney: {fileID: 3121089032125963471}
   rewardExp: {fileID: 8963332487207110657}
+  Pages:
+  - {fileID: 4864920863773280917}
 --- !u!1 &4439044980878697668
 GameObject:
   m_ObjectHideFlags: 0
@@ -4653,7 +4655,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1374801512292929432}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5126,7 +5128,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8521213437910767126}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.53513205
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
