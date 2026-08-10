@@ -75,7 +75,7 @@ namespace Services
         {
 
             Debug.LogFormat("OnMapCharacterLeave: CharID:{0}", response.entityId);
-            if (response.entityId != User.Instance.CurrentCharacter.Id)
+            if (response.entityId != User.Instance.CurrentCharacter.EntityId)
                 CharacterManager.Instance.RemoveCharacter(response.entityId);
             else
                 CharacterManager.Instance.Clear();

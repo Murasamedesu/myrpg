@@ -62,7 +62,7 @@ public class GameObjectManager : MonoSingleton<GameObjectManager>
                 return;
             }
             GameObject go = (GameObject)Instantiate(obj, this.transform);
-            go.name = "Character_" + character.Info.Id + "_" + character.Info.Name;
+            go.name = "Character_" + character.Id + "_" + character.Name;
 
             Characters[character.entityId] = go;
 

@@ -70,4 +70,11 @@ public class UIMain : MonoSingleton<UIMain>
     {
         UIManager.Instance.ShoW<UIQuestSystem>();
     }
+
+    public void OnClickFriendList()
+    {
+        UIManager.Instance.ShoW<UIFriends>();
+    }
+
+
 }

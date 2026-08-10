@@ -16,13 +16,13 @@ namespace Network
         public TUser User { get; set; }
         public Character Character { get; set; }
         public NEntity Entity { get; set; }
+        public IPostResponser PostResponser { get; set; }
 
         public void Disconnected()
         {
-            if(this.Character != null)
-            {
+            this.PostResponser = null;
+            if (this.Character != null)
                 UserService.Instance.CharacterLeave(this.Character);
-            }
         }
 
 
@@ -32,35 +32,29 @@ namespace Network
         {
             get
             {
-                if(response == null)
+                if (response == null)
                 {
                     response = new NetMessage();
                 }
-                if(response.Response == null)
-                {
+                if (response.Response == null)
                     response.Response = new NetMessageResponse();
-                }
                 return response.Response;
             }
         }
 
-
         public byte[] GetResponse()
         {
-            if(response != null)
+            if (response != null)
             {
-                if(this.Character != null && this.Character.StatusManager.HasStatus)
-                {
-                    this.Character.StatusManager.ApplyResponse(Response);
-                }
+                if (PostResponser != null)
+                    this.PostResponser.PostProcess(Response);
+
                 byte[] data = PackageHandler.PackMessage(response);
                 response = null;
                 return data;
             }
             return null;
         }
-
-
 
     }
 }
