@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Services;
 using Managers;
+using UnityEngine.UI;
+using TMPro;
+using SkillBridge.Message;
+using System.Linq;
 
 public class UIFriends : UIWindow
 {
@@ -11,15 +15,20 @@ public class UIFriends : UIWindow
     public ListView listMain;
     public Transform itemRoot;
     public UIFriendItem selectedItem;
+    public TMP_InputField searchInput;
 
-
-
+    private List<NFriendInfo> currentDisplayList = new List<NFriendInfo>();
 
     void Start()
     {
         FriendService.Instance.OnFriendUpdate = RefreshUI;
         this.listMain.onItemSelected += this.OnFriendSelected;
         RefreshUI();
+
+        if (searchInput != null)
+        {
+            searchInput.onValueChanged.AddListener(OnSearchValueChanged);
+        }
     }
 
     void Update()
@@ -50,6 +59,26 @@ public class UIFriends : UIWindow
             FriendService.Instance.SendFriendRemoveRequest(selectedItem.Info.Id, selectedItem.Info.friendInfo.Id);
         };
     }
+
+    public void OnClickFriendTeamInvite()
+    {
+        if (selectedItem == null)
+        {
+            MessageBox.Show("请选择要邀请的好友");
+            return;
+        }
+        if(selectedItem.Info.Status == 0)
+        {
+            MessageBox.Show("请选择在线好友");
+            return;
+        }
+        MessageBox.Show(string.Format("确定要邀请好友[{0}]加入队伍吗?", selectedItem.Info.friendInfo.Name), "邀请好友组队", MessageBoxType.Confirm, "邀请", "取消").OnYes = () =>
+        {
+            TeamService.Instance.SendTeamInviteRequest(this.selectedItem.Info.friendInfo.Id, this.selectedItem.Info.friendInfo.Name);
+        };
+
+    }
+
 
     public void OnClickFriendChat()
     {
@@ -87,7 +116,19 @@ public class UIFriends : UIWindow
 
     void InitFriendItems()
     {
-        foreach(var item in FriendManager.Instance.allFriends)
+        List<NFriendInfo> sourceList = FriendManager.Instance.allFriends;
+        if (sourceList == null) return;
+        string keyword = "";
+        if (searchInput != null && !string.IsNullOrEmpty(searchInput.text))
+        {
+            keyword = searchInput.text.Trim().ToLower(); // 转小写以便不区分大小写搜索
+        }
+        var filteredAndSorted = sourceList.Where(f => f.friendInfo != null && f.friendInfo.Name != null).Where(f => string.IsNullOrEmpty(keyword) || f.friendInfo.Name.ToLower().Contains(keyword))
+        .OrderByDescending(f => IsOnline(f)).ToList();
+        currentDisplayList = filteredAndSorted.ToList();
+
+
+        foreach (var item in currentDisplayList)
         {
             GameObject go = Instantiate(itemPrefab, listMain.transform);
             UIFriendItem ui = go.GetComponent<UIFriendItem>();
@@ -102,6 +143,20 @@ public class UIFriends : UIWindow
     void ClearFrienddList()
     {
         listMain.RemoveAll();
+        this.selectedItem = null;
+    }
+
+
+
+    private void OnSearchValueChanged(string newText)
+    {
+        RefreshUI(); 
+    }
+
+    private bool IsOnline(NFriendInfo info)
+    {
+        if (info == null || info.friendInfo == null) return false;
+        return info.Status == 1;
     }
 
 

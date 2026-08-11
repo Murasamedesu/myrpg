@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Network;
 using Common;
+using GameServer.Models;
 
 namespace GameServer.Entities
 {
@@ -21,6 +22,9 @@ namespace GameServer.Entities
         public StatusManager StatusManager;
         public QuestManager QuestManager;
         public FriendManager FriendManager;
+
+        public Team Team;
+        public int TeamUpdateTS;
 
         public Character(CharacterType type, TCharacter cha) :
             base(new Core.Vector3Int(cha.MapPosX, cha.MapPosY, cha.MapPosZ), new Core.Vector3Int(100, 0, 0))
@@ -81,15 +85,15 @@ namespace GameServer.Entities
             Log.InfoFormat("PostProcess > Character: characterID:{0}:{1}", this.Id, this.Info.Name);
             this.FriendManager.PostProcess(message);
 
-            //if (this.Team != null)
-            //{
-            //    Log.InfoFormat("PostProcess > Team: characterID:{0}:{1}  {2}<{3}", this.Id, this.Info.Name, TeamUpdateTS, this.Team.timestamp);
-            //    if (TeamUpdateTS < this.Team.timestamp)
-            //    {
-            //        TeamUpdateTS = Team.timestamp;
-            //        this.Team.PostProcess(message);
-            //    }
-            //}
+            if (this.Team != null)
+            {
+                Log.InfoFormat("PostProcess > Team: characterID:{0}:{1}  {2}<{3}", this.Id, this.Info.Name, TeamUpdateTS, this.Team.timestamp);
+                if (TeamUpdateTS < this.Team.timestamp)
+                {
+                    TeamUpdateTS = Team.timestamp;
+                    this.Team.PostProcess(message);
+                }
+            }
 
             //if (this.Guild != null)
             //{
@@ -120,8 +124,7 @@ namespace GameServer.Entities
         /// </summary>
         public void Clear()
         {
-            this.FriendManager.UpdateFriendInfo(this.Info, 0);
-            //this.FriendManager.OfflineNotify();
+            this.FriendManager.OfflineNotify();
         }
 
         public NCharacterInfo GetBasicInfo()

@@ -14,7 +14,7 @@ public class UIMain : MonoSingleton<UIMain>
     public TMP_Text avaterName;
     public TMP_Text avaterLevel;
 
-
+    public UITeam TeamWindow;
 
     protected override void OnStart()
     {
@@ -76,5 +76,9 @@ public class UIMain : MonoSingleton<UIMain>
         UIManager.Instance.ShoW<UIFriends>();
     }
 
+    public void ShowTeamUI(bool show)
+    {
+        TeamWindow.ShowTeam(show);
+    }
 
 }

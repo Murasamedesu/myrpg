@@ -32,6 +32,7 @@ namespace Models
 
         public MapDefine CurrentMapData { get; set; }
 
+        public NTeamInfo TeamInfo { get; set; }
 
         public void AddGold(int gold)
         {

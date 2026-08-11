@@ -18,7 +18,6 @@ public class LoadingManager : MonoBehaviour {
     public Slider progressBar;
     public Text progressText;
     public Text progressNumber;
-
     // Use this for initialization
     IEnumerator Start()
     {
@@ -42,6 +41,7 @@ public class LoadingManager : MonoBehaviour {
         UserService.Instance.Init();
         StatusService.Instance.Init();
         FriendService.Instance.Init();
+        TeamService.Instance.Init();
         
         ShopManager.Instance.Init();
         // Fake Loading Simulate
