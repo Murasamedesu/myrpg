@@ -1,6 +1,7 @@
 ﻿using Common;
 using GameServer.Entities;
 using GameServer.Managers;
+using GameServer.Models;
 using Network;
 using SkillBridge.Message;
 using System;
@@ -107,11 +108,30 @@ namespace GameServer.Services
         {
             Character character = sender.Session.Character;
             Log.InfoFormat("OnTeamLeave :character:{0} TeamID:{1} : {2}", character.Id, request.TeamId, request.characterId);
+            Team team = character.Team;
+            if (team != null) team.Leave(character);
+
+            foreach(Character member in team.Members)
+            {
+                NetConnection<NetSession> memberSession = SessionManager.Instance.GetSession(member.Id);
+                memberSession.Session.Response.teamInfo = new TeamInfoResponse();
+                memberSession.Session.Response.teamInfo.Result = Result.Success;
+                memberSession.Session.Response.teamInfo.Team = new NTeamInfo();
+                memberSession.Session.Response.teamInfo.Team.Id = team.Id;
+                memberSession.Session.Response.teamInfo.Team.Leader = team.Leader.Id;
+                foreach(Character cha in team.Members)
+                {
+                    memberSession.Session.Response.teamInfo.Team.Members.Add(member.GetBasicInfo());
+                }
+                memberSession.SendResponse();
+            }
+
             sender.Session.Response.teamLeave = new TeamLeaveResponse();
             sender.Session.Response.teamLeave.Result = Result.Success;
+            sender.Session.Response.teamLeave.Errormsg = character.Id == request.characterId ? "退出成功" : "踢出成功";
             sender.Session.Response.teamLeave.characterId = request.characterId;
 
-            character.Team.Leave(character);
+            
             sender.SendResponse();
 
         }

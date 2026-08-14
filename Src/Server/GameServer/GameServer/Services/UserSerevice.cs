@@ -175,6 +175,9 @@ namespace GameServer.Services
 
             sender.Session.Response.gameEnter.Result = Result.Success;
             sender.Session.Response.gameEnter.Errormsg = "None";
+
+            sender.Session.Character = character;
+            sender.Session.PostResponser = character;
             sender.Session.Response.gameEnter.Character = character.Info;
 
 
@@ -202,8 +205,7 @@ namespace GameServer.Services
 
 
             sender.SendResponse();
-            sender.Session.Character = character;
-            sender.Session.PostResponser = character;
+
             MapManager.Instance[dbchar.MapID].CharacterEnter(sender, character);
 
         }

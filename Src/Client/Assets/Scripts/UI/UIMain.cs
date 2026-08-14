@@ -7,6 +7,7 @@ using Models;
 using SkillBridge.Message;
 using Services;
 using System;
+using Managers;
 
 
 public class UIMain : MonoSingleton<UIMain>
@@ -79,6 +80,26 @@ public class UIMain : MonoSingleton<UIMain>
     public void ShowTeamUI(bool show)
     {
         TeamWindow.ShowTeam(show);
+    }
+
+    public void OnClickGuild()
+    {
+        GuildManager.Instance.ShowGuild();
+    }
+
+    public void OnClickRide()
+    {
+
+    }
+
+    public void OnClickSetting()
+    {
+
+    }
+
+    public void OnClickSkill()
+    {
+
     }
 
 }

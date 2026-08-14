@@ -21,7 +21,7 @@ public class UIFriends : UIWindow
 
     void Start()
     {
-        FriendService.Instance.OnFriendUpdate = RefreshUI;
+        
         this.listMain.onItemSelected += this.OnFriendSelected;
         RefreshUI();
 
@@ -29,6 +29,16 @@ public class UIFriends : UIWindow
         {
             searchInput.onValueChanged.AddListener(OnSearchValueChanged);
         }
+    }
+
+    private void OnEnable()
+    {
+        FriendService.Instance.OnFriendUpdate += RefreshUI;
+    }
+
+    private void OnDisable()
+    {
+        FriendService.Instance.OnFriendUpdate -= RefreshUI;
     }
 
     void Update()
