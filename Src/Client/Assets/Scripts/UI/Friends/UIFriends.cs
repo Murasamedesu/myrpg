@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using SkillBridge.Message;
 using System.Linq;
+using static UnityEngine.GraphicsBuffer;
 
 public class UIFriends : UIWindow
 {
@@ -92,7 +93,7 @@ public class UIFriends : UIWindow
 
     public void OnClickFriendChat()
     {
-
+        ChatManager.Instance.StartPrivateChat(this.selectedItem.Info.friendInfo.Id, this.selectedItem.Info.friendInfo.Name);
     }
 
 

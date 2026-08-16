@@ -29,6 +29,7 @@ namespace GameServer.Entities
         public Guild Guild;
         public double GuildUpdateTS;
 
+        public Chat Chat;
 
         public Character(CharacterType type, TCharacter cha) :
             base(new Core.Vector3Int(cha.MapPosX, cha.MapPosY, cha.MapPosZ), new Core.Vector3Int(100, 0, 0))
@@ -65,6 +66,7 @@ namespace GameServer.Entities
 
             this.Guild = GuildManager.Instance.GetGuild(this.Data.GuildId);
 
+            this.Chat = new Chat(this);
 
             this.StatusManager = new StatusManager(this);
 
@@ -122,7 +124,7 @@ namespace GameServer.Entities
                 this.StatusManager.PostProcess(message);
             }
 
-            //this.Chat.PostProcess(message);
+            this.Chat.PostProcess(message);
         }
 
         /// <summary>

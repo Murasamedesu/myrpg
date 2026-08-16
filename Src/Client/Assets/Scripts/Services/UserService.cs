@@ -228,7 +228,7 @@ namespace Services
         {
             Debug.LogFormat("UserEnterRequest::characterID: {0}", Charidx);
 
-            // ChatManager.Instance.Init();//进入游戏前初始化
+            ChatManager.Instance.Init();//进入游戏前初始化
 
             NetMessage message = new NetMessage();
             message.Request = new NetMessageRequest();

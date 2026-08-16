@@ -1,28 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class UITest : UIWindow
+public class InputManager : MonoSingleton<InputManager>
 {
-
-    public TMP_Text title;
-
+    public bool IsInputMode = false;
     void Start()
     {
         
     }
 
+    // Update is called once per frame
     void Update()
     {
         
     }
-
-
-    public void SetTitle(string title)
-    {
-        this.title.text = title;
-    }
-
-
 }

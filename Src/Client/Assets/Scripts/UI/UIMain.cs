@@ -43,19 +43,6 @@ public class UIMain : MonoSingleton<UIMain>
     }
 
 
-    public void OnClickTest()
-    {
-        UITest test = UIManager.Instance.ShoW<UITest>();
-        test.SetTitle("这是一个测试UI");
-        test.OnClose += Test_OnClose;
-
-    }
-
-    private void Test_OnClose(UIWindow sender, UIWindow.WindowResult result)
-    {
-        MessageBox.Show("TEST:: 点击了测试UI对话框的" + result, "对话框响应结果", MessageBoxType.Information);
-
-    }
 
     public void OnClickBag()
     {
@@ -94,7 +81,7 @@ public class UIMain : MonoSingleton<UIMain>
 
     public void OnClickSetting()
     {
-
+        UIManager.Instance.ShoW<UISetting>();
     }
 
     public void OnClickSkill()
