@@ -76,7 +76,7 @@ public class UIMain : MonoSingleton<UIMain>
 
     public void OnClickRide()
     {
-
+        UIManager.Instance.ShoW<UIRide>();
     }
 
     public void OnClickSetting()

@@ -39,5 +39,21 @@ namespace Models
             this.CurrentCharacter.Gold += gold;
         }
 
+
+        public int CurrentRide = 0;
+        internal void Ride(int id)
+        {
+            if(CurrentRide != id)
+            {
+                CurrentRide = id;
+                CurrentCharacterObject.SendEntityEvent(EntityEvent.Ride, CurrentRide);
+            }
+            else
+            {
+                CurrentRide = 0;
+                CurrentCharacterObject.SendEntityEvent(EntityEvent.Ride, 0);
+            }
+        }
+
     }
 }

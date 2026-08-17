@@ -1749,6 +1749,8 @@ MonoBehaviour:
   animSpeed: 1.5
   jumpPower: 3
   isPlayer: 0
+  rideController: {fileID: 0}
+  rideBone: {fileID: 3473312231812628961}
 --- !u!114 &2350303887584919663
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ public class UIQuestInfo : MonoBehaviour
     public TMP_Text rewardMoney;
     public TMP_Text rewardExp;
 
+    public TMP_Text overview;
+
     List<Image> slots;
     public Transform[] Pages;
     void Start()
@@ -26,6 +28,8 @@ public class UIQuestInfo : MonoBehaviour
     public void SetQuestInfo(Quest quest)
     {
         this.title.text = string.Format("[{0}] {1}", quest.Define.Type, quest.Define.Name);
+        if(this.overview != null) this.overview.text = quest.Define.Overview;
+        
         if (slots == null)
         {
             slots = new List<Image>();
@@ -44,25 +48,29 @@ public class UIQuestInfo : MonoBehaviour
                 }
             }
         }
-        if (quest.Info == null)
-        {
-            this.description.text = quest.Define.Dialog;
-            this.targets.text = quest.Define.Overview;
 
-        }
-        else
+        if (this.description != null)
         {
-            if(quest.Info.Status == SkillBridge.Message.QuestStatus.Complated)
+            if (quest.Info == null)
             {
-                this.description.text = quest.Define.DialogFinish;
+                this.description.text = quest.Define.Dialog;
+                this.targets.text = quest.Define.Overview;
+
             }
-            if(quest.Info.Status == SkillBridge.Message.QuestStatus.Finished)
+            else
             {
-                this.description.text = quest.Define.DialogFinish;
-            }
-            if (quest.Info.Status == SkillBridge.Message.QuestStatus.InProgress)
-            {
-                this.description.text = quest.Define.DialogIncomplete;
+                if (quest.Info.Status == SkillBridge.Message.QuestStatus.Complated)
+                {
+                    this.description.text = quest.Define.DialogFinish;
+                }
+                if (quest.Info.Status == SkillBridge.Message.QuestStatus.Finished)
+                {
+                    this.description.text = quest.Define.DialogFinish;
+                }
+                if (quest.Info.Status == SkillBridge.Message.QuestStatus.InProgress)
+                {
+                    this.description.text = quest.Define.DialogIncomplete;
+                }
             }
         }
 

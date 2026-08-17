@@ -109,7 +109,7 @@ namespace Services
                 Id = entity.Id,
                 Event = entityEvent,
                 Entity = entity,
-                //Param = param
+                Param = param
             };
             NetClient.Instance.SendMessage(message);
         }
