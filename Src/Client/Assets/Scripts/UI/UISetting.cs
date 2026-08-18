@@ -7,24 +7,19 @@ using UnityEngine;
 public class UISetting : UIWindow
 {
 
-    
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
 
 
     public void BackToCharSelect()
     {
         SceneManager.Instance.LoadScene("CharSelect");
+        SoundManager.Instance.PlayMusic(SoundDefine.Music_Select);
         UserService.Instance.SendGameLeave();
+    }
+
+    public void SystemConfig()
+    {
+        UIManager.Instance.ShoW<UISystemConfig>();
+        this.Close();
     }
 
 
