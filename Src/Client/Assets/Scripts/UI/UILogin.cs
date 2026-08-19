@@ -29,6 +29,7 @@ public class UILogin : MonoBehaviour
         {
             MessageBox.Show(string.Format("µÇÂ¼³É¹¦£º{0} msg:{1}", result, msg));
             SceneManager.Instance.LoadScene("CharSelect");
+            SoundManager.Instance.PlayMusic(SoundDefine.Music_Select);
         }
         else
         {
@@ -49,7 +50,7 @@ public class UILogin : MonoBehaviour
             return;
         }
 
-
+        SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Click);
         UserService.Instance.SendLogin(this.username.text, this.password.text);
 
     }

@@ -154,6 +154,7 @@
     <Compile Include="Assets\Scripts\UI\Ride\UIRide.cs" />
     <Compile Include="Assets\Scripts\UI\UISetting.cs" />
     <Compile Include="Assets\Scripts\UI\Chat\LinkOpener.cs" />
+    <Compile Include="Assets\Scripts\GameObject\NavPathRenderer.cs" />
     <Compile Include="Assets\ThirdParty\Candlelight\Library\GUI\KeywordsGlossary.cs" />
     <Compile Include="Assets\Scripts\UI\Friends\UIFriendItem.cs" />
     <Compile Include="Assets\Scripts\Managers\ChatManager.cs" />

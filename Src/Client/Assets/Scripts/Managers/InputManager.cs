@@ -5,14 +5,5 @@ using UnityEngine;
 public class InputManager : MonoSingleton<InputManager>
 {
     public bool IsInputMode = false;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

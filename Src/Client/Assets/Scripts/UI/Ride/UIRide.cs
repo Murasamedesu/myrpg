@@ -39,7 +39,7 @@ public class UIRide : UIWindow
         InitItems();
     }
 
-    //初始化左侧装备列表
+    //初始化左侧列表
     void InitItems()
     {
         foreach (var kv in ItemManager.Instance.Items)

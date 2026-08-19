@@ -20,6 +20,10 @@ public class UIQuestInfo : MonoBehaviour
 
     List<Image> slots;
     public Transform[] Pages;
+
+    public Button navButton;
+    private int npc = 0;
+
     void Start()
     {
     }
@@ -99,6 +103,16 @@ public class UIQuestInfo : MonoBehaviour
         this.rewardMoney.text = quest.Define.RewardGold.ToString();
         this.rewardExp.text = quest.Define.RewardExp.ToString();
 
+        if(quest.Info == null)
+        {
+            this.npc = quest.Define.AcceptNPC;
+        }
+        else if(quest.Info.Status == SkillBridge.Message.QuestStatus.Complated)
+        {
+            this.npc = quest.Define.SubmitNPC;
+        }
+        this.navButton.gameObject.SetActive(this.npc > 0);
+
         foreach(var fitter in this.GetComponentsInChildren<ContentSizeFitter>())
         {
             fitter.SetLayoutVertical();
@@ -114,7 +128,12 @@ public class UIQuestInfo : MonoBehaviour
 
     }
 
-
+    public void OnClickNav()
+    {
+        Vector3 pos = NpcManager.Instance.GetNpcPosition(this.npc);
+        User.Instance.CurrentCharacterObject.StartNav(pos);
+        UIManager.Instance.Close<UIQuestSystem>();
+    }
 
 
 

@@ -2,6 +2,7 @@ using Entities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using SkillBridge.Message;
 using Services;
 using System.IO.IsolatedStorage;
@@ -21,6 +22,8 @@ public class PlayerInputController : MonoBehaviour
 
     SkillBridge.Message.CharacterState state;
 
+    private NavMeshAgent agent;
+    private bool autoNav = false;
 
     void Start()
     {
@@ -42,7 +45,72 @@ public class PlayerInputController : MonoBehaviour
 
             if (entityController != null) entityController.entity = this.character;
         }
+        if(agent == null)
+        {
+            agent = this.gameObject.AddComponent<NavMeshAgent>();
+            agent.stoppingDistance = 1.5f;
+            
+        }
     }
+
+    public void StartNav(Vector3 target)
+    {
+        StartCoroutine(BeginNav(target));
+    }
+
+    IEnumerator BeginNav(Vector3 target)
+    {
+        
+        agent.SetDestination(target);
+        yield return null;
+        autoNav = true;
+        if(state != SkillBridge.Message.CharacterState.Move)
+        {
+            state = SkillBridge.Message.CharacterState.Move;
+            this.character.MoveForward();
+            this.SendEntityEvent(EntityEvent.MoveFwd);
+            agent.speed = this.character.speed / 100f;
+        }
+    }
+
+    public void StopNav()
+    {
+        autoNav = false;
+        agent.ResetPath();
+        if(state != SkillBridge.Message.CharacterState.Idle)
+        {
+            state = SkillBridge.Message.CharacterState.Idle;
+            this.rb.velocity = Vector3.zero;
+            this.character.Stop();
+            this.SendEntityEvent(EntityEvent.Idle);
+        }
+        NavPathRenderer.Instance.SetPath(null, Vector3.zero);
+    }
+
+    public void NavMove()
+    {
+        if (agent.pathPending) return;
+        if(agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            StopNav();
+            return;
+        }
+        if (agent.pathStatus != NavMeshPathStatus.PathComplete) return;
+
+        if(Mathf.Abs(Input.GetAxis("Vertical")) > 0.1 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1)
+        {
+            StopNav();
+            return;
+        }
+
+        NavPathRenderer.Instance.SetPath(agent.path, agent.destination);
+        if(agent.isStopped || agent.remainingDistance < 1.5f)
+        {
+            StopNav();
+            return;
+        }
+    }
+
 
 
     void FixedUpdate()
@@ -51,6 +119,12 @@ public class PlayerInputController : MonoBehaviour
         {
             return;
         }
+        if (autoNav)
+        {
+            NavMove();
+            return;
+        }
+
         if (InputManager.Instance != null && InputManager.Instance.IsInputMode) return;
 
         float v = Input.GetAxis("Vertical");
@@ -131,6 +205,16 @@ public class PlayerInputController : MonoBehaviour
             this.SendEntityEvent(EntityEvent.None);
         }
         this.transform.position = this.rb.transform.position;
+
+        Vector3 dir = GameObjectTool.LogicToWorld(character.direction);
+        Quaternion rot = new Quaternion();
+        rot.SetFromToRotation(dir, this.transform.forward);
+
+        if(rot.eulerAngles.y > this.turnAngle && rot.eulerAngles.y < (360 - this.turnAngle))
+        {
+            character.SetDirection(GameObjectTool.WorldToLogic(this.transform.forward));
+            this.SendEntityEvent(EntityEvent.None);
+        }
     }
 
 
