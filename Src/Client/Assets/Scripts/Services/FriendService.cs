@@ -42,8 +42,8 @@ namespace Services
             NetMessage msg = new NetMessage();
             msg.Request = new NetMessageRequest();
             msg.Request.friendAddReq = new FriendAddRequest();
-            msg.Request.friendAddReq.FromId = User.Instance.CurrentCharacter.Id;
-            msg.Request.friendAddReq.FromName = User.Instance.CurrentCharacter.Name;
+            msg.Request.friendAddReq.FromId = User.Instance.CurrentCharacterInfo.Id;
+            msg.Request.friendAddReq.FromName = User.Instance.CurrentCharacterInfo.Name;
             msg.Request.friendAddReq.ToId = friendId;
             msg.Request.friendAddReq.ToName = friendName;
             NetClient.Instance.SendMessage(msg);

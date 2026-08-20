@@ -69,12 +69,12 @@ namespace Managers
             foreach (var kv in DataManager.Instance.Quests)
             {
                 // 职业是否符合
-                if (kv.Value.LimitClass != CharacterClass.None && kv.Value.LimitClass != User.Instance.CurrentCharacter.Class)
+                if (kv.Value.LimitClass != CharacterClass.None && kv.Value.LimitClass != User.Instance.CurrentCharacterInfo.Class)
                 {
                     continue;
                 }
                 // 等级要求是否满足
-                if (kv.Value.LimitLevel > User.Instance.CurrentCharacter.Level)
+                if (kv.Value.LimitLevel > User.Instance.CurrentCharacterInfo.Level)
                 {
                     continue;
                 }

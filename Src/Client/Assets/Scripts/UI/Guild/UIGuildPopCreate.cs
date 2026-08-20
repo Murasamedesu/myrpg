@@ -45,7 +45,7 @@ public class UIGuildPopCreate : UIWindow
             return;
         }
 
-        Character character = CharacterManager.Instance.GetCharacter(User.Instance.CurrentCharacter.Id);
+        Character character = CharacterManager.Instance.GetCharacter(User.Instance.CurrentCharacterInfo.Id);
         if (character.Info.Gold >= 2000)
         {
             GuildService.Instance.SendGuildCreate(InputName.text, InputNotice.text);

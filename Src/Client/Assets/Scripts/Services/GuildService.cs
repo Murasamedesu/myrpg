@@ -216,7 +216,7 @@ namespace Services
                 return;
             }
 
-            int myCharId = User.Instance.CurrentCharacter.Id; // 你自己的角色ID
+            int myCharId = User.Instance.CurrentCharacterInfo.Id; // 你自己的角色ID
             bool isAboutMe = (message.Command.Target == myCharId);
 
             switch (message.Command.Command)

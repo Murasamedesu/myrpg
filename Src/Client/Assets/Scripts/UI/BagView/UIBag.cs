@@ -56,7 +56,7 @@ public class UIBag : UIWindow
 
     public void SetTitle()
     {
-        this.PlayerGold.text = User.Instance.CurrentCharacter.Gold.ToString();
+        this.PlayerGold.text = User.Instance.CurrentCharacterInfo.Gold.ToString();
 
     }
 

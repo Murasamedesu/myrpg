@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common.Data;
+using Entities;
 using Services;
 using SkillBridge.Message;
 using UnityEngine;
@@ -26,7 +27,9 @@ namespace Models
             this.userInfo = info;
         }
 
-        public SkillBridge.Message.NCharacterInfo CurrentCharacter { get; set; }
+        public Character CurrentCharacter { get; set; }
+
+        public SkillBridge.Message.NCharacterInfo CurrentCharacterInfo { get; set; }
 
         public PlayerInputController CurrentCharacterObject { get; set; }
 
@@ -36,7 +39,7 @@ namespace Models
 
         public void AddGold(int gold)
         {
-            this.CurrentCharacter.Gold += gold;
+            this.CurrentCharacterInfo.Gold += gold;
         }
 
 

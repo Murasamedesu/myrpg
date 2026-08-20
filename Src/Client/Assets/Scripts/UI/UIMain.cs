@@ -31,8 +31,8 @@ public class UIMain : MonoSingleton<UIMain>
 
     public void UpdateAvater()
     {
-        avaterName.text = string.Format("{0} [{1}]", User.Instance.CurrentCharacter.Name, User.Instance.CurrentCharacter.Id);
-        avaterLevel.text = User.Instance.CurrentCharacter.Level.ToString();
+        avaterName.text = string.Format("{0} [{1}]", User.Instance.CurrentCharacterInfo.Name, User.Instance.CurrentCharacterInfo.Id);
+        avaterLevel.text = User.Instance.CurrentCharacterInfo.Level.ToString();
     }
 
 
