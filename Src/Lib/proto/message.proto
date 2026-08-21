@@ -101,6 +101,8 @@ message NCharacterInfo {
 	repeated NFriendInfo friends = 17;
 	NGuildInfo guild = 18;
 	int32 ride = 19;
+
+	repeated NSkillInfo Skills = 20;
 }
 
 message NAttributeDynamic
@@ -114,6 +116,13 @@ message NItemInfo
 	int32 id = 1;
 	int32 count = 2;
 }
+
+message NSkillInfo
+{
+	int32 id = 1;
+	int32 level = 2;
+}
+
 
 message NVector3
 {

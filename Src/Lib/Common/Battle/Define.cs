@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.Battle
 {
-    // 属性定义 ,枚举
+    // 战斗系统相关定义 枚举
     public enum AttributeType
     {
         None = -1,
@@ -23,6 +23,27 @@ namespace Common.Battle
         CRI = 10,   //暴击率
 
         MAX
+    }
+
+    public enum TargetType
+    {
+        None,
+        Target,
+        Self,
+        Position
+    }
+
+    public enum BuffEffect
+    {
+        None,
+        Stun,
+    }
+
+    public enum SkillType
+    {
+        None,
+        Normal,
+        Skill,
     }
 
 }
